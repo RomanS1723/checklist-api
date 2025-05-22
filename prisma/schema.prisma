@@ -31,13 +31,14 @@ model Post {
 }
 
 model Answer {
-  id          Int       @id @default(autoincrement())
-  type        String // вопрос/ответ, развернутый ответ, цифровой ответ
-  correct     Boolean? // для вопрос/ответ
-  description String? // для развернутого ответа
-  count       Int? // для цифрового ответа
-  Post        Post?     @relation(fields: [postId], references: [id])
-  postId      Int?
-  Settings    Settings? @relation(fields: [settingsId], references: [id])
-  settingsId  Int?
+  id               Int       @id @default(autoincrement())
+  type             String // вопрос/ответ, развернутый ответ, цифровой ответ
+  fieldDescription String? // описание поля
+  correct          Boolean? // для вопрос/ответ
+  description      String? // для развернутого ответа
+  count            Int? // для цифрового ответа
+  Post             Post?     @relation(fields: [postId], references: [id])
+  postId           Int?
+  Settings         Settings? @relation(fields: [settingsId], references: [id])
+  settingsId       Int?
 }
