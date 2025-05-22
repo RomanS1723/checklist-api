@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  login    String  @unique
+  password String
+  role     String? @default("user")
+  posts    Post[]
+}
+
+model Settings {
+  id                 Int      @id @default(autoincrement())
+  referenceQuestions Answer[]
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  type        String // перед/после начала работы
+  questions   Answer[]
+  title       String?
+  description String?
+  User        User?    @relation(fields: [userId], references: [id])
+  userId      Int?
+}
+
+model Answer {
+  id          Int       @id @default(autoincrement())
+  type        String // вопрос/ответ, развернутый ответ, цифровой ответ
+  correct     Boolean? // для вопрос/ответ
+  description String? // для развернутого ответа
+  count       Int? // для цифрового ответа
+  Post        Post?     @relation(fields: [postId], references: [id])
+  postId      Int?
+  Settings    Settings? @relation(fields: [settingsId], references: [id])
+  settingsId  Int?
+}
