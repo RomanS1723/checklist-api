@@ -31,7 +31,6 @@ export class AuthController {
   async register(
     @Body() registerDto: { login: string; password: string; role: Roles },
   ): Promise<void> {
-    console.log('reg');
     await this.authService.register(
       registerDto.login,
       registerDto.password,
