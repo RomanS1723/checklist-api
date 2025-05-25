@@ -9,8 +9,8 @@ import {
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { Roles } from 'src/dto/user';
-import { RoleGuard } from 'src/role/role.guard';
 import { Role } from 'src/role/role.decorator';
+import { RoleGuard } from 'src/role/role.guard';
 
 @Controller()
 export class AuthController {

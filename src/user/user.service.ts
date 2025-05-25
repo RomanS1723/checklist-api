@@ -1,5 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { User } from 'generated/prisma';
+import { User } from '@prisma/client';
 import { DatabaseService } from 'src/database/database.service';
 import { UserAdd, UserChange, Roles } from 'src/dto/user';
 
@@ -9,19 +9,6 @@ export class UserService implements OnModuleInit {
 
   async onModuleInit() {
     await this.ensureAdminExists();
-  }
-
-  private async ensureAdminExists() {
-    const adminLogin = process.env.ADMIN_LOGIN || 'admin';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin';
-    const admin = await this.findByLogin(adminLogin);
-    if (!admin) {
-      await this.add({
-        login: adminLogin,
-        password: adminPassword,
-        role: Roles.ADMIN,
-      });
-    }
   }
 
   async findByLogin(login: string): Promise<User> {
@@ -46,5 +33,18 @@ export class UserService implements OnModuleInit {
 
   async deleteById(id: number): Promise<void> {
     await this.databaseService.user.delete({ where: { id } });
+  }
+
+  private async ensureAdminExists() {
+    const adminLogin = process.env.ADMIN_LOGIN || 'admin';
+    const adminPassword = process.env.ADMIN_PASSWORD || 'admin';
+    const admin = await this.findByLogin(adminLogin);
+    if (!admin) {
+      await this.add({
+        login: adminLogin,
+        password: adminPassword,
+        role: Roles.ADMIN,
+      });
+    }
   }
 }
