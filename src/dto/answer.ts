@@ -7,6 +7,7 @@ export enum AnswerType {
 export class Answer {
   id?: number;
   type: AnswerType;
+  onBeforeStart: boolean;
   fieldDescription?: string;
   correct?: boolean;
   description?: string;

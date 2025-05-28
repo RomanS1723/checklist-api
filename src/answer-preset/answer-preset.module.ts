@@ -8,5 +8,6 @@ import { UserModule } from 'src/user/user.module';
   imports: [DatabaseModule, UserModule],
   providers: [AnswerPresetService],
   controllers: [AnswerPresetController],
+  exports: [AnswerPresetService],
 })
 export class AnswerPresetModule {}

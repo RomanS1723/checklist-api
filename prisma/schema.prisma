@@ -22,7 +22,6 @@ model Settings {
 
 model Post {
   id          Int      @id @default(autoincrement())
-  type        String // перед/после начала работы
   questions   Answer[]
   title       String?
   description String?
@@ -33,6 +32,7 @@ model Post {
 model Answer {
   id               Int       @id @default(autoincrement())
   type             String // вопрос/ответ, развернутый ответ, цифровой ответ
+  onBeforeStart    Boolean // перед/после начала работы
   fieldDescription String? // описание поля
   correct          Boolean? // для вопрос/ответ
   description      String? // для развернутого ответа
