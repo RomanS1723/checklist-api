@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Answer } from 'src/dto/answer';
 import { DatabaseService } from 'src/database/database.service';
 import { Post } from 'src/dto/post';
 
@@ -29,25 +30,30 @@ export class PostService {
   }
 
   async createPost(post: Post): Promise<Post> {
-    const { title, description, questions } = post;
+    const { title, description, questions, userId } = post;
     const createdPost = await this.databaseService.post.create({
       data: {
+        userId,
         title,
         description,
       },
     });
+    await this.addAnswers(createdPost.id, questions as Answer[]);
+    return await this.getPost(createdPost.id);
+  }
+
+  async addAnswers(postId: number, answers: Answer[]): Promise<void> {
     await this.databaseService.answer.createMany({
-      data: questions.map((answer) => ({
+      data: answers.map((answer) => ({
         type: answer.type,
         onBeforeStart: answer.onBeforeStart,
         fieldDescription: answer.fieldDescription,
         correct: answer.correct,
         description: answer.description,
         count: answer.count,
-        postId: createdPost.id,
+        postId: postId,
       })),
     });
-    return await this.getPost(createdPost.id);
   }
 
   async deletePost(postId: number): Promise<void> {

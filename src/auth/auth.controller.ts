@@ -27,7 +27,7 @@ export class AuthController {
   @UseGuards(AuthGuard, RoleGuard)
   @Role(Roles.ADMIN)
   @HttpCode(HttpStatus.OK)
-  @Post('register')
+  @Post('admin/register')
   async register(
     @Body() registerDto: { login: string; password: string; role: Roles },
   ): Promise<void> {

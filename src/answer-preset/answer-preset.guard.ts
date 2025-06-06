@@ -24,7 +24,7 @@ export class AnswerPresetGuard implements CanActivate {
       }
     }
     if (answer.type === AnswerType.COUNT) {
-      if (!answer.count) {
+      if (typeof answer.count !== 'number') {
         throw new ConflictException(
           '"type": "count" requires a field with the name "count" and the type number',
         );
