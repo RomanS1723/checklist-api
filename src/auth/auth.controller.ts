@@ -20,7 +20,7 @@ export class AuthController {
   @Post('login')
   async login(
     @Body() signInDto: Record<string, string>,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ accessToken: string; role: Roles }> {
     return await this.authService.signIn(signInDto.login, signInDto.password);
   }
 

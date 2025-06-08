@@ -12,4 +12,5 @@ export class Answer {
   correct?: boolean;
   description?: string;
   count?: number;
+  createdAt?: Date;
 }

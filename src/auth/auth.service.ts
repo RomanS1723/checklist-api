@@ -14,7 +14,7 @@ export class AuthService {
   async signIn(
     login: string,
     password: string,
-  ): Promise<{ accessToken: string }> {
+  ): Promise<{ accessToken: string; role: Roles }> {
     const user: User = await this.userService.findByLogin(login);
     if (user?.password !== password) {
       throw new UnauthorizedException();
@@ -22,6 +22,7 @@ export class AuthService {
     const playload = { sub: user.id, username: user.login };
     return {
       accessToken: await this.jwtService.signAsync(playload),
+      role: user.role as Roles,
     };
   }
 
