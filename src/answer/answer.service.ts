@@ -29,4 +29,45 @@ export class AnswerService {
       },
     });
   }
+
+  async getAllUsersAnswers() {
+    return await this.databaseService.answer.findMany({
+      where: {
+        settingsId: null,
+        Post: {
+          userId: {
+            not: null,
+          },
+          User: {
+            role: {
+              not: 'admin',
+            },
+          },
+        },
+      },
+      select: {
+        id: true,
+        type: true,
+        onBeforeStart: true,
+        fieldDescription: true,
+        correct: true,
+        description: true,
+        count: true,
+        createdAt: true,
+        Post: {
+          select: {
+            id: true,
+            User: {
+              select: {
+                id: true,
+                login: true,
+                role: true,
+              },
+            },
+          },
+        },
+      },
+      take: 100,
+    });
+  }
 }

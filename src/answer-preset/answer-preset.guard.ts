@@ -11,7 +11,7 @@ export class AnswerPresetGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean | Promise<boolean> {
     const request = context.switchToHttp().getRequest();
     const answer = request.body as Answer;
-    this.isAnswerTypeValid(answer);
+    // this.isAnswerTypeValid(answer);
     return true;
   }
 

@@ -11,6 +11,10 @@ export class UserService implements OnModuleInit {
     await this.ensureAdminExists();
   }
 
+  async getAll(): Promise<User[]> {
+    return await this.databaseService.user.findMany({ take: 100 });
+  }
+
   async findByLogin(login: string): Promise<User> {
     return await this.databaseService.user.findFirst({ where: { login } });
   }
